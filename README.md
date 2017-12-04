@@ -6,13 +6,7 @@ https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/as
 http://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-config.html
 http://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-discovery.html
 
-/config/application/data
 
-Consul Requires that YAML is suffixed by 'data' key to work properly
-/ config / [MICROSERVICE_NAME], [PROFILE] / data
-/ config / [MICROSERVICE_NAME] / data
-/ config / application, [PROFILE] / data
-/ config / application / data
 
 
 # Running this project  
@@ -24,6 +18,20 @@ Consul Requires that YAML is suffixed by 'data' key to work properly
 `./gradlew bootRun -Dspring.profiles.active="mypillar,holding"`  
 Or without Spring Profiles  
 `./gradlew bootRun`
+
+
+
+
+# Consul Key Value (KV) Structure  
+
+/ config / application / data  
+/ config / application-<spring-profile> / data  
+/ config / <microservice-name> / data  
+/ config / <microservice-name>-<spring-profile> / data  
+
+> The application key: `/config/application/data` is considered global to all applications.  
+> The application key: `/config/application-<spring-profile>/data` is considered global to all applications with the specified spring profile.  
+> Consul Requires that YAML is suffixed by 'data' key to work properly.  The configuration above assumes that the key values are all YAML.  
 
 # Resources
 * [Spring Cloud Consul](https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/asciidoc/spring-cloud-consul.adoc)

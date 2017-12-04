@@ -20,14 +20,12 @@ Or without Spring Profiles
 `./gradlew bootRun`
 
 
-
-
 # Consul Key Value (KV) Structure  
 
 / config / application / data  
-/ config / application-<spring-profile> / data  
-/ config / <microservice-name> / data  
-/ config / <microservice-name>-<spring-profile> / data  
+/ config / application-[spring-profile] / data  
+/ config / [microservice-name] / data  
+/ config / [microservice-name]-[spring-profile] / data  
 
 > The application key: `/config/application/data` is considered global to all applications.  
 > The application key: `/config/application-<spring-profile>/data` is considered global to all applications with the specified spring profile.  

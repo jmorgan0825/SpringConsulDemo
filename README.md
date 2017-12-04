@@ -15,31 +15,15 @@ Consul Requires that YAML is suffixed by 'data' key to work properly
 / config / application / data
 
 
-# Running this project
-
-
-1. Start Docker Container for Consul (runs on port 8500)
-
+# Running this project  
+1. Start Docker Container for Consul (runs on port 8500)  
 `docker-compose up`
-
-
-2. Run Git2Consul Command to populate Consul KV Store
-
+2. Run Git2Consul Command to populate Consul KV Store  
 `git2consul --endpoint localhost --port 8500 --config-file /<path-to-project>/SpringConsulDemo/src/main/resources/git2consul/Git2Consul-SpringConsulDemo-master.json`
-
-
-3. Run Application
-`./gradlew bootRun -Dspring.profiles.active="mypillar,holding"`
-
-Or without Spring Profiles
-
+3. Run Application  
+`./gradlew bootRun -Dspring.profiles.active="mypillar,holding"`  
+Or without Spring Profiles  
 `./gradlew bootRun`
-
-
-
-
-
-
 
 # Resources
 * [Spring Cloud Consul](https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/asciidoc/spring-cloud-consul.adoc)
@@ -49,25 +33,17 @@ Or without Spring Profiles
 #This command will work as long as
 spring.cloud.consul.config.format = yaml | properties
 
-#Useful Links
-#Consul
-http://localhost:8500
-#Application Health Check
-http://localhost:8080/health
+# Useful Project Links
 
-#Application Controller Tests
-# Returns the String "Alive!"
-http://localhost:8080/ping
+* [Consul - localhost:8500](http://localhost:8500)
+* [Application Health Check](http://localhost:8080/health)
+* [Simple Rest Ping - Returns Alive!](http://localhost:8080/ping)
+* [RestTemplate mapped to localhost:8080/ping](http://localhost:8080/ping/rest)
+* [Ribbon load balanced RestTemplate mapped to springconsuldemo - Return Alive!](http://localhost:8080/ping/rest/ribbon)
+* [Ribbon load balanced Feign client - Return Alive!](http://localhost:8080/ping/rest/feign)
+* [Endpoint to display the properties resolved from the Consul KV store](http://localhost:8080/property)
 
-# Returns the String "Alive!" via standard RestTemplate mapped to localhost
-http://localhost:8080/ping/rest
-# Returns the String "Alive!" via Ribbon load balanced RestTemplate mapped to springcloudwebtest (service discovery)
-http://localhost:8080/ping/rest/ribbon
-# Returns the String "Alive!" via Ribbon load balanced feign client
-http://localhost:8080/ping/rest/feign
 
-#This endpoint will display the properties that were resolved from the Consul KV store
-http://localhost:8080/property
 
 TODO:  Need to configure a Git2Consul example
 https://github.com/jmorgan0825/Git2Consul

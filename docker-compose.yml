@@ -1,0 +1,5 @@
+consul:
+  container_name: my-consul
+  image: consul:0.7.0
+  ports:
+    - "8500:8500"

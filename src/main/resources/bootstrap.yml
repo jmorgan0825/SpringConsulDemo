@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: springconsuldemo
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+      config:
+        format: yaml
+        prefix: config
+        defaultContext: application
+        data-key: data
+        profileSeparator: '-'
+      discovery:
+        port: 8080
+        prefer-ip-address: true
+        healthCheckPath: /health
+        healthCheckInterval: 5s
+
+management:
+  security:
+    enabled: false

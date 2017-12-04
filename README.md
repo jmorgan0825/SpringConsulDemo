@@ -15,19 +15,39 @@ Consul Requires that YAML is suffixed by 'data' key to work properly
 / config / application / data
 
 
-#Running this example
+# Running this project
 
-#Start Docker Container for Consul (runs on port 8500)
-1. docker-compose up
-# Run Git2Consul Command to populate Consul KV Store
-2. git2consul --endpoint localhost --port 8500 --config-file /Users/johnmorgan/Documents/dev/spring-cloud/SpringConsulDemo/src/main/resources/git2consul/Git2Consul-SpringConsulDemo-master.json
 
+1. Start Docker Container for Consul (runs on port 8500)
+
+`docker-compose up`
+
+
+2. Run Git2Consul Command to populate Consul KV Store
+
+`git2consul --endpoint localhost --port 8500 --config-file /<path-to-project>/SpringConsulDemo/src/main/resources/git2consul/Git2Consul-SpringConsulDemo-master.json`
+
+
+3. Run Application
+`./gradlew bootRun -Dspring.profiles.active="mypillar,holding"`
+
+Or without Spring Profiles
+
+`./gradlew bootRun`
+
+
+
+
+
+
+
+# Resources
+* [Spring Cloud Consul](https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/asciidoc/spring-cloud-consul.adoc)
+* [Spring Cloud Consul - Reference](http://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-config.html)
+* [Git2Consul Configuration Repo](https://github.com/jmorgan0825/Git2Consul)
 
 #This command will work as long as
 spring.cloud.consul.config.format = yaml | properties
-
-
-
 
 #Useful Links
 #Consul
@@ -51,7 +71,7 @@ http://localhost:8080/property
 
 TODO:  Need to configure a Git2Consul example
 https://github.com/jmorgan0825/Git2Consul
-https://github.com/breser/git2consul
+
 
 
 https://bitbucket.org/bettercloud/bettercloud-properties/src/03363ff028ab906fb2d349127b8dc230d2cd2a0d/config/?at=master

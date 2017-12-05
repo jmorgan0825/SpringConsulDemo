@@ -10,6 +10,15 @@ services:
       - "8500:8500"
       - "8600:53/udp"
 
+  git2consul:
+    image: "cimpress/git2consul"
+    container_name: "git2consul"
+    links:
+    - "consul:consul"
+    volumes:
+      - ./src/main/resources/git2consul:/git2consul
+    command: --endpoint consul --port 8500 --config-file /git2consul/Git2Consul-SpringConsulDemo-master.json
+
   vault:
     depends_on:
       - consul
@@ -26,4 +35,3 @@ services:
       - ./config/vault:/config
       - ./config/vault/policies:/policies
     entrypoint: /wait-for-it.sh -t 20 -h consul -p 8500 -s -- vault server -config=/config/with-consul.hcl
-

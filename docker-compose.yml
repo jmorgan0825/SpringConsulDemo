@@ -16,11 +16,11 @@ services:
     container_name: git2consul
     volumes:
       - ./tools:/tools
-      - ./src/main/resources/git2consul:/git2consul
+      - ./services/springconsuldemo1/src/main/resources/git2consul:/git2consul
     entrypoint: >
       /tools/wait-for-it.sh consul:8500 --
       /usr/bin/node /usr/lib/node_modules/git2consul --endpoint consul
-      --config-file /git2consul/Git2Consul-SpringConsulDemo-master.json
+      --config-file /git2consul/git2consul.json
 
   vault:
     depends_on:

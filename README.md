@@ -17,7 +17,7 @@ This is a sample project to demonstrate Spring Cloud Config and Service Discover
 2. Initialize Vault
 [see below](#initialize-vault)
 3. Run Application  
-`./gradlew bootRun -Dspring.profiles.active="mypillar,holding"`  
+`VAULT_APP_TOKEN=app_token SPRING_PROFILES_ACTIVE=mypillar,holding ./start.sh`  
 Or without Spring Profiles  
 `./gradlew bootRun`
 
@@ -93,9 +93,9 @@ http://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-disco
 
 ```bash
 $ export VAULT_ADDRESS=http://127.0.0.1:8200
-$ ./tools/unseal_vault.sh # copy root token from output
+$ ./tools/unseal_vault.sh # copy root token from console ui 
 $ export VAULT_TOKEN=token
-$ vault token-create -policy="root" # generate vault token
+$ vault token-create # generate vault token
 $ export VAULT_APP_TOKEN=token # pasted from above
 $ vault write secret/springconsuldemo password=hunter2
 ```

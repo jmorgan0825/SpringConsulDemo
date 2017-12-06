@@ -9,7 +9,7 @@ read -p "Running this script will initialize & unseal Vault,${cr}then put your u
 
 if [ "$ANSWER" != "yes" ]; then
   echo
-  echo "Exiting without intializing & unsealing Vault, no keys or tokens were stored."
+  echo "Exiting without initializing & unsealing Vault, no keys or tokens were stored."
   echo
   exit 1
 fi
@@ -30,8 +30,6 @@ if [ ! $(cget root-token) ]; then
   export ROOT_TOKEN=$(cat /tmp/vault.init | grep '^Initial' | awk '{print $4}')
   curl -fX PUT 127.0.0.1:8500/v1/kv/service/vault/root-token -d $ROOT_TOKEN
 
-  echo "Root token: $ROOT_TOKEN"
-
   echo "Remove master keys from disk"
   rm /tmp/vault.init
 else
@@ -39,9 +37,9 @@ else
 fi
 
 echo "Unsealing Vault"
-vault unseal $(cget unseal-key-1)
-vault unseal $(cget unseal-key-2)
-vault unseal $(cget unseal-key-3)
+vault unseal $(cget unseal-key-1) > /dev/null
+vault unseal $(cget unseal-key-2) > /dev/null
+vault unseal $(cget unseal-key-3) > /dev/null
 
 echo "Vault setup complete."
 

@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: springconsuldemo2
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      enabled: true
+      config:
+        format: yaml
+        prefix: config
+        defaultContext: application
+        data-key: data
+        profileSeparator: '-'
+    vault:
+      scheme: http
+      host: vault
+      authentication: TOKEN
+      uri: http://localhost:8200
+      token: ${VAULT_APP_TOKEN}
+
+management:
+  security:
+    enabled: false

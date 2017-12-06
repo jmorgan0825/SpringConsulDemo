@@ -1,9 +1,0 @@
-server:
-  port: 8080
-spring:
-  application:
-    name: springconsuldemo
-management:
-  security:
-    enabled: false
-

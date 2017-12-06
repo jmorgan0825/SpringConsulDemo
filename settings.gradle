@@ -1,2 +1,3 @@
 rootProject.name = 'springcloudwebtest'
+include ":services:springconsuldemo1", ":services:springconsuldemo2"
 

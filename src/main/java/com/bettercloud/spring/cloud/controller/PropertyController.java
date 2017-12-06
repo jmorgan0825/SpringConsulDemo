@@ -28,6 +28,9 @@ public class PropertyController {
     @Value("${infrastructurePassword:default value}")
     private String infrastructurePassword;
 
+	@Value("${password:mypassword}")
+	private String secret;
+
     @RequestMapping
     public String getProperty() {
         return "<h3>applicationProperty:</h3> " + applicationProperty + "</br>"
@@ -35,6 +38,8 @@ public class PropertyController {
                 + "<h3>property2:</h3> " + property2 + "</br>"
                 + "<h3>infrastructureDesc:</h3> " + infrastructureDesc + "</br>"
                 + "<h3>infrastructureUserName:</h3> " + infrastructureUserName + "</br>"
-                + "<h3>infrastructurePassword:</h3> " + infrastructurePassword;
+                + "<h3>infrastructurePassword:</h3> " + infrastructurePassword + "</br>"
+				+ "<h3>vault password:</h3>" + secret + "</br>";
     }
+
 }

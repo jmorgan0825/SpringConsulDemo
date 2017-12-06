@@ -40,6 +40,7 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-consul-config')
     compile('org.springframework.cloud:spring-cloud-starter-consul-discovery')
     compile('org.springframework.cloud:spring-cloud-context')
+	compile('org.springframework.cloud:spring-cloud-starter-vault-config')
 
 
     runtime('org.springframework.boot:spring-boot-devtools')

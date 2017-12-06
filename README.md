@@ -15,7 +15,7 @@ This is a sample project to demonstrate Spring Cloud Config and Service Discover
 1. Start Docker Container for Consul (runs on port 8500)  
 `docker-compose up`
 2. Initialize Vault
-[Initialize Vault](see below)
+[see below](#initialize-vault)
 3. Run Application  
 `./gradlew bootRun -Dspring.profiles.active="mypillar,holding"`  
 Or without Spring Profiles  
@@ -93,10 +93,9 @@ http://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-disco
 
 ```bash
 $ export VAULT_ADDRESS=http://127.0.0.1:8200
-$ vault init
-$ vault unseal // paste one unseal key
-$ vault unseal // paste another unseal key
-$ vault unseal // paste another unseal key
-$ vault auth // paste root token
-$ vault write secret/password value=my_super_secret_password
+$ ./tools/unseal_vault.sh # copy root token from output
+$ export VAULT_TOKEN=token
+$ vault token-create -policy="root" # generate vault token
+$ export VAULT_APP_TOKEN=token # pasted from above
+$ vault write secret/springconsuldemo password=hunter2
 ```

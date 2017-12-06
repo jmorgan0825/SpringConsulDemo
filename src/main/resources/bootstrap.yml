@@ -20,6 +20,11 @@ spring:
         prefer-ip-address: true
         healthCheckPath: /health
         healthCheckInterval: 5s
+    vault:
+      scheme: http
+      authentication: TOKEN
+      uri: http://localhost:8200
+      token: ${VAULT_APP_TOKEN}
 
 management:
   security:

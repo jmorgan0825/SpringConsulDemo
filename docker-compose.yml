@@ -1,5 +1,45 @@
-consul:
-  container_name: my-consul
-  image: consul:0.7.0
-  ports:
-    - "8500:8500"
+version: "2.3" # cannot upgrade to 3.+ because they remove service_healthy condition
+# TODO investigate docker swarm
+
+services:
+  consul:
+    image: consul:0.7.0
+    container_name: consul
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:53/udp"
+    environment:
+      - 'CONSUL_LOCAL_CONFIG={"log_level": "INFO"}'
+    healthcheck:
+        test: ["CMD-SHELL", "curl -f http://127.0.0.1:8500/v1/health/state/any | grep passing || exit 1"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
+
+  git2consul:
+    image: cimpress/git2consul
+    depends_on:
+        consul:
+            condition: service_healthy
+    container_name: git2consul
+    volumes:
+      - ./config/git2consul:/config
+    command: --endpoint consul --config-file /config/git2consul.json
+
+  vault:
+    depends_on:
+      consul:
+        condition: service_healthy
+    image: vault
+    hostname: vault
+    container_name: vault
+    environment:
+      VAULT_ADDR: 127.0.0.1:8200
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./config/vault:/config
+      - ./config/vault/policies:/policies
+    command: server -config=/config/with-consul.hcl

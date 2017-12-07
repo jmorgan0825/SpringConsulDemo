@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: service
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      enabled: true
+      discovery:
+        instance-id: ${spring.application.name}:${random.value}
+      config:
+        format: yaml
+        prefix: config
+        defaultContext: application
+        data-key: data
+        profileSeparator: '-'
+    vault:
+      scheme: http
+      host: vault
+      authentication: TOKEN
+      token: ${VAULT_APP_TOKEN}
+
+management:
+  security:
+    enabled: false

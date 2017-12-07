@@ -1,30 +1,34 @@
-version: "3"
-services:
+version: "2.3" # cannot upgrade to 3.+ because they remove service_healthy condition
 
+services:
   consul:
     image: consul:0.7.0
     container_name: consul
-    hostname: consul
     ports:
       - "8400:8400"
       - "8500:8500"
       - "8600:53/udp"
-    command: "agent -dev -client 0.0.0.0"
+    healthcheck:
+        test: ["CMD-SHELL", "curl -f http://127.0.0.1:8500/v1/health/state/any | grep passing || exit 1"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
 
   git2consul:
     image: cimpress/git2consul
+    depends_on:
+        consul:
+            condition: service_healthy
     container_name: git2consul
     volumes:
-      - ./tools:/tools
-      - ./services/springconsuldemo1/src/main/resources/git2consul:/git2consul
-    entrypoint: >
-      /tools/wait-for-it.sh consul:8500 --
-      /usr/bin/node /usr/lib/node_modules/git2consul --endpoint consul
-      --config-file /git2consul/git2consul.json
+      - ./config/git2consul:/config
+    command: --endpoint consul --config-file /config/git2consul.json
 
   vault:
     depends_on:
-      - consul
+      consul:
+        condition: service_healthy
     image: vault
     hostname: vault
     container_name: vault
@@ -33,8 +37,6 @@ services:
     ports:
       - "8200:8200"
     volumes:
-      - ./tools/wait-for-it.sh:/wait-for-it.sh
       - ./config/vault:/config
       - ./config/vault/policies:/policies
-    entrypoint: >
-      /wait-for-it.sh consul:8500 -- vault server -config=/config/with-consul.hcl
+    command: server -config=/config/with-consul.hcl

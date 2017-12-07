@@ -1,4 +1,5 @@
 version: "2.3" # cannot upgrade to 3.+ because they remove service_healthy condition
+# TODO investigate docker swarm
 
 services:
   consul:
@@ -8,6 +9,8 @@ services:
       - "8400:8400"
       - "8500:8500"
       - "8600:53/udp"
+    environment:
+      - 'CONSUL_LOCAL_CONFIG={"log_level": "INFO"}'
     healthcheck:
         test: ["CMD-SHELL", "curl -f http://127.0.0.1:8500/v1/health/state/any | grep passing || exit 1"]
         interval: 10s

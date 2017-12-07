@@ -11,7 +11,7 @@ public class MeController {
     private String instanceId;
 
     @Autowired
-    public MeController(@Value("${spring.cloud.discovery.instance-id}") String instanceId) {
+    public MeController(@Value("${spring.cloud.consul.discovery.instance-id}") String instanceId) {
         this.instanceId = instanceId;
     }
 

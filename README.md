@@ -94,4 +94,5 @@ http://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-disco
 ```bash
 $ export VAULT_ADDRESS=http://127.0.0.1:8200
 $ ./tools/unseal_vault.sh # copy app token from output
+$ export VAULT_APP_TOKEN=token
 ```

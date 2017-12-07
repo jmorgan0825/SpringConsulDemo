@@ -9,8 +9,6 @@ spring:
       host: consul
       port: 8500
       enabled: true
-      discovery:
-        instanceId: ${spring.application.name}:${random.value}
       config:
         format: yaml
         prefix: config

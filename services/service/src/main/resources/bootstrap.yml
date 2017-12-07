@@ -11,6 +11,7 @@ spring:
       enabled: true
       discovery:
         instance-id: ${spring.application.name}:${random.value}
+        service-name: ${spring.application.name}-${ENVIRONMENT:local}
       config:
         format: yaml
         prefix: config

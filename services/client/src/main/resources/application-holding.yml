@@ -1,2 +1,2 @@
 service:
-  host: http://service-holding
+  name: http://service-holding

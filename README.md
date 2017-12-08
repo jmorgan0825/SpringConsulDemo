@@ -5,7 +5,7 @@ This is a sample project to demonstrate Spring Cloud Config and Service Discover
   `spring.cloud.consul.config.format = yaml | properties`
 
 ## Remaining Objectives
-* Integrate Vault to store and resolve secrets
+* ~~Integrate Vault to store and resolve secrets~~
 * Refine the local development process (bypass bootstrap)
 * Include Zuul | Cloud Gateway into this project
 * Include Hystrix into this project
@@ -15,11 +15,13 @@ This is a sample project to demonstrate Spring Cloud Config and Service Discover
 1. Start Docker Container for Consul (runs on port 8500)  
 `docker-compose up`
 2. Initialize Vault
-[see below](#initialize-vault)
-3. Run Application  
-`VAULT_APP_TOKEN=app_token SPRING_PROFILES_ACTIVE=mypillar,holding ./start.sh`  
-Or without Spring Profiles  
-`./gradlew bootRun`
+```bash
+$ export VAULT_ADDRESS=http://127.0.0.1:8200
+$ ./tools/unseal_vault.sh # copy app token from output
+$ export VAULT_APP_TOKEN=token
+```
+3. Run Applications
+`./bin/vault/unseal.sh`
 
 
 # Consul Key Value (KV) Structure  
@@ -89,10 +91,3 @@ https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/as
 http://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-config.html
 http://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-discovery.html
 
-## Initialize Vault
-
-```bash
-$ export VAULT_ADDRESS=http://127.0.0.1:8200
-$ ./tools/unseal_vault.sh # copy app token from output
-$ export VAULT_APP_TOKEN=token
-```

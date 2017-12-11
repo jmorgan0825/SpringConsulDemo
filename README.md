@@ -77,7 +77,7 @@ https://bitbucket.org/bettercloud/bettercloud-properties/src/03363ff028ab906fb2d
     Application
 
 
-#once you disable bootstrap then service discovery is diabled hence no feign @Loadbalanced annotated endpoint will fail
+#once you disable bootstrap then service discovery is disabled hence no feign @Loadbalanced annotated endpoint will fail
 #Also any name-resolved rest templates will not work.  We would need to make more dynamic configuration to support disabling bootstrap.
 
 #Stackoverflow

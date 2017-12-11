@@ -1,0 +1,20 @@
+version: "2.3"
+
+services:
+
+  service:
+    build: ./services/service
+    environment:
+      - ENVIRONMENT=holding
+      - SPRING_PROFILES_ACTIVE=docker,holding
+      - VAULT_APP_TOKEN=${VAULT_APP_TOKEN}
+
+  client:
+    build: ./services/client
+    container_name: client
+    hostname: client
+    ports:
+     - "8081:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker,holding
+      - VAULT_APP_TOKEN=${VAULT_APP_TOKEN}

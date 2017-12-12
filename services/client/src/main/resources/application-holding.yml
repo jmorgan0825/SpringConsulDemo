@@ -1,3 +1,2 @@
 service:
-  host: http://service-holding
-  me: ${service.host}/me
+  name: http://service-holding

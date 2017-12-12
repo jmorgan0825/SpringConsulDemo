@@ -5,3 +5,10 @@ endpoints:
   shutdown:
     enabled: true
 
+bettercloud:
+  service:
+    name: service-${ENVIRONMENT:local}
+
+feign:
+  hystrix:
+    enabled: true

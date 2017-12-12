@@ -1,29 +1,51 @@
 package com.bettercloud.spring.cloud.controller;
 
+import feign.hystrix.FallbackFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 
+@Slf4j
 @RestController
 @RequestMapping("/client")
 public class ClientController {
 
-    private String serviceEndpoint;
-    private RestTemplate restTemplate;
+    private ServiceClient serviceClient;
 
     @Autowired
-    public ClientController(@Value("${service.me}") final String serviceEndpoint, final RestTemplate restTemplate) {
-        this.serviceEndpoint = serviceEndpoint;
-        this.restTemplate = restTemplate;
+    public ClientController(final ServiceClient serviceClient) {
+        this.serviceClient = serviceClient;
     }
 
     @GetMapping
     public String getService() {
-        return restTemplate.getForEntity(serviceEndpoint, String.class).getBody();
+        return serviceClient.getId();
+    }
+
+    @FeignClient(name = "${bettercloud.service.name}", fallbackFactory = ClientFallbackFactory.class)
+    public interface ServiceClient {
+
+        @GetMapping("/me")
+        String getId();
+
+    }
+
+    @Component
+    static class ClientFallbackFactory implements FallbackFactory<ServiceClient> {
+
+        @Override
+        public ServiceClient create(final Throwable cause) {
+            return () -> {
+                log.error("Error getting id for service", cause);
+                return "Failure";
+            };
+        }
+
     }
 
 }
